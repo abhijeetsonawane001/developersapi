@@ -1,0 +1,69 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<header class="flex">
+    <div class="container mx-auto">
+        <div class="py-12 flex justify-between">
+            <h1 class="text-3xl font-bold tracking-tighter">developersapi</h1>
+            <a href="{{ url_for('home.login') }}" class="rounded px-4 py-2 font-medium border-2 border-black hover:bg-black hover:text-white capitalize transition-colors duration-300 cursor-pointer">login</a>
+        </div>
+        <div>
+            <a href="/"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg> Back</a>
+            <h3 class="text-5xl font-bold mt-3 tracking-tighter">Create Account</h3>
+            <div class="flex justify-center mt-24">
+                {% if form %}
+                <form action="" method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            {% if form.first_name.errors %}
+                            {{ form.first_name.label(class='block font-semibold text-red-600') }}
+                            {{ form.first_name(class='px-4 py-2 border-2 border-red-600 text-red-600 font-medium bg-transparent', autocomplete='off') }}
+                            {% for error in form.first_name.errors %}
+                                <p class="text-red-600 text-sm">{{ error }}</p>
+                            {% endfor %}
+                            {% else %}
+                            {{ form.first_name.label(class='block font-semibold') }}
+                            {{ form.first_name(class='px-4 py-2 border-2 border-black font-medium bg-transparent', autocomplete='off') }}
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% if form.last_name.errors %}
+                            {{ form.last_name.label(class='block font-semibold text-red-600') }}
+                            {{ form.last_name(class='px-4 py-2 border-2 border-red-600 text-red-600 font-medium bg-transparent', autocomplete='off') }}
+                            {% for error in form.last_name.errors %}
+                                <p class="text-red-600 text-sm">{{ error }}</p>
+                            {% endfor %}
+                            {% else %}
+                            {{ form.last_name.label(class='block font-semibold') }}
+                            {{ form.last_name(class='px-4 py-2 border-2 border-black font-medium bg-transparent', autocomplete='off') }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        {% if form.email_id.errors %}
+                        {{ form.email_id.label(class='block font-semibold text-red-600') }}
+                        {{ form.email_id(class='px-4 py-2 border-2 border-red-600 text-red-600 font-medium w-full bg-transparent', autocomplete='off') }}
+                        {% for error in form.email_id.errors %}
+                            <p class="text-red-600 text-sm">{{ error }}</p>
+                        {% endfor %}
+                        {% else %}
+                        {{ form.email_id.label(class='block font-semibold') }}
+                        {{ form.email_id(class='px-4 py-2 border-2 border-black font-medium w-full bg-transparent', autocomplete='off') }}
+                        {% endif %}
+                    </div>
+                    <div class="mt-5">
+                        {{ form.submit(class='rounded px-4 py-2 font-medium border-2 bg-black border-black hover:bg-transparent hover:text-black text-white capitalize transition-colors duration-300 cursor-pointer') }}
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</header>
+
+{% endblock %}

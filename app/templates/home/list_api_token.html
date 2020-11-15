@@ -1,0 +1,44 @@
+{% extends "layouts/dashboard.html" %}
+
+{% block extra_css %}
+<style>
+    svg {
+        height: 24px!important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 class="text-5xl font-bold">{{ title }}</h1>
+<div class="pr-12 mt-10 w-100">
+    <a href="{{ url_for('home.create_api_token') }}" class="uppercase inline-block"><svg class="mb-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+      </svg><span class="mt-4">create api token</span></a>
+    {% if api_tokens %}
+    <table class="table-auto w-full mt-5">
+        <thead>
+            <tr>
+                <th class="px-4 py-2 uppercase border font-bold text-gray-700 w-2/4">api token</th>
+                <th class="px-4 py-2 uppercase border font-bold text-gray-700 w-1/4">created at</th>
+                <th class="px-4 py-2 uppercase border font-bold text-gray-700 w-1/4">expires at</th>
+                <th class="px-4 py-2 uppercase border font-bold text-gray-700 w-1/4">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for token in api_tokens %}
+            <tr>
+                <td class="px-4 py-2 uppercase border font-medium text-gray-700">{{ token.api_name }}</td>
+                <td class="px-4 py-2 uppercase border font-medium text-gray-700">{{ token.created_at.strftime('%d %B, %Y %I:%M %p') }}</td>
+                <td class="px-4 py-2 uppercase border font-medium text-gray-700">{% if token.created_at == token.api_token_valid_till %} - {% else %} {{ token.api_token_valid_till.strftime('%d %B, %Y %I:%M %p') }} {% endif %}</td>
+                <td class="px-4 py-2 uppercase border font-medium text-gray-700"><a href="{{ url_for('home.delete_api_token', token_id=token.id, developer_id=current_user.id) }}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <h4 class="mt-8 text-3xl font-bold">API Tokens not found.</h4>
+    {% endif %}
+</div>
+{% endblock %}

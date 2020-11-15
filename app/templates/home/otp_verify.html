@@ -1,0 +1,58 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<header class="flex">
+    <div class="container mx-auto">
+        <div class="py-12">
+            <h1 class="text-3xl font-bold tracking-tighter">developersapi</h1>
+        </div>
+        <div>
+            <a href="/"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg> Back</a>
+            <h3 class="text-5xl font-bold mt-3 tracking-tighter">OTP Verification</h3>
+            <div class="flex justify-center items-center flex-col mt-24">
+                <div class="w-1/3">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    <ul class=flashes>
+                        {% for category, message in messages %}
+                        {% if category == "danger" %}
+                        <li class="bg-red-600 px-4 py-3">{{ message }}</li>
+                        {% elif category == "success" %}
+                        <li class="bg-green-600 px-4 py-3">{{ message }}</li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% endwith %}
+                    {% if form %}
+                    <form action="" method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="mt-5">
+                            {% if form.otp.errors %}
+                            {{ form.otp.label(class='block font-semibold text-red-600') }}
+                            {{ form.otp(class='px-4 py-2 border-2 border-red-600 text-red-600 font-medium w-full bg-transparent', autocomplete='off') }}
+                            {% for error in form.otp.errors %}
+                            <p class="text-red-600 text-sm">{{ error }}</p>
+                            {% endfor %}
+                            {% else %}
+                            {{ form.otp.label(class='block font-semibold') }}
+                            {{ form.otp(class='px-4 py-2 border-2 border-black font-medium w-full bg-transparent', autocomplete='off') }}
+                            {% endif %}
+                        </div>
+                        <div class="mt-5">
+                            {{ form.submit(class='rounded px-4 py-2 font-medium border-2 bg-black border-black hover:bg-transparent hover:text-black text-white capitalize transition-colors duration-300 cursor-pointer') }}
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>
+
+{% endblock %}

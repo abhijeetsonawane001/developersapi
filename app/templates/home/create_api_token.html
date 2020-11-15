@@ -1,0 +1,73 @@
+{% extends "layouts/dashboard.html" %}
+
+{% block content %}
+<a href="{{ url_for('home.list_api_token') }}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+</svg> Back</a>
+<div class="pr-12 mt-8 w-100">
+    <h1 class="text-5xl font-bold">{{ title }}</h1>
+    <div class="container mx-auto">
+        <div class="flex flex-col justify-center items-center mt-32">
+            {% if form %}
+                <form action="" method="post" class="w-1/2">
+                    {{ form.hidden_tag() }}
+                    <div>
+                        {% if form.api_name.errors %}
+                        {{ form.api_name.label(class='block font-semibold text-red-600 uppercase') }}
+                        {{ form.api_name(class='px-4 py-2 border-2 border-red-600 text-red-600 font-medium bg-transparent w-full', autocomplete='off') }}
+                        {% for error in form.api_name.errors %}
+                            <p class="text-red-600 text-sm">{{ error }}</p>
+                        {% endfor %}
+                        {% else %}
+                        {{ form.api_name.label(class='block font-semibold uppercase') }}
+                        {{ form.api_name(class='px-4 py-2 border-2 border-black font-medium bg-transparent w-full', autocomplete='off') }}
+                        {% endif %}
+                    </div>
+                    <div class="mt-5 hidden" id="api_valid_till_field">
+                        {% if form.api_valid_till.errors %}
+                        {{ form.api_valid_till.label(class='block font-semibold text-red-600 uppercase') }}
+                        {{ form.api_valid_till(class='px-4 py-2 border-2 border-red-600 text-red-600 font-medium bg-transparent w-full', autocomplete='off') }}
+                        {% for error in form.api_valid_till.errors %}
+                            <p class="text-red-600 text-sm">{{ error }}</p>
+                        {% endfor %}
+                        {% else %}
+                        {{ form.api_valid_till.label(class='block font-semibold uppercase') }}
+                        {{ form.api_valid_till(class='px-4 py-2 border-2 border-black font-medium bg-transparent w-full', autocomplete='off', value='0') }}
+                        {% endif %}
+                    </div>
+                    <div class="mt-5">
+                        <input type="checkbox" name="timed_based_token_field" id="timed_based_token_field" class="mr-2">
+                        <label for="timed_based_token_field" class="font-semibold uppercase">Timed Based API Token</label>
+                    </div>
+                    <div class="mt-5">
+                        {{ form.submit(class='rounded px-4 py-2 font-medium border-2 bg-black border-black hover:bg-transparent hover:text-black text-white capitalize transition-colors duration-300 cursor-pointer') }}
+                    </div>
+                </form>
+            {% endif %}
+            {% if api_token %}
+            <div class="w-1/2">
+                <div class="bg-black text-white px-5 py-3">
+                    <h3 class="font-bold">{{ api_token.api_name }}</h3>
+                    <h3 class="font-semibold mt-3">{{ token }}</h3>
+                </div>
+                <p class="mt-5">Note: We store hash of API Token. API Token will not shown again.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    const timed_based_token_field = document.getElementById("timed_based_token_field");
+    timed_based_token_field.addEventListener('change', (event) => {
+        if(event.target.checked) {
+            document.querySelector("#api_valid_till_field").classList.remove("hidden");
+        }
+        else {
+            document.querySelector("#api_valid_till_field").classList.add("hidden");
+        }
+    })
+</script>
+{% endblock %}

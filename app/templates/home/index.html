@@ -1,0 +1,16 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<div class="h-screen flex justify-center items-center bg-gray-100">
+    <div>
+        <div>
+            <h1 class="text-6xl font-bold tracking-tighter">developersapi</h1>
+            <p class="da-letter-spacing uppercase">fake online rest api for testing</p>
+        </div>
+        <div class="flex justify-evenly mt-8">
+            <a href="{{ url_for('home.register') }}" class="rounded px-4 py-2 font-medium border-2 border-black hover:bg-black hover:text-white capitalize transition-colors duration-300 cursor-pointer">getting started</a>
+            <a href="{{ url_for('home.login') }}" class="rounded px-4 py-2 font-medium border-2 bg-black border-black hover:bg-transparent hover:text-black text-white capitalize transition-colors duration-300 cursor-pointer">login</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+flake8 = "==3.7.9"
+black = "==19.10b0"
+pytest = "==5.3.5"
+coverage = "==5.0.3"
+
+[packages]
+Flask = "*"
+Flask-SQLAlchemy = "*"
+Flask-Login = "*"
+Flask-Migrate = "*"
+Flask-WTF = "*"
+Flask-Mail = "*"
+email-validator = "*"
+psycopg2-binary = "*"
+
+[requires]
+python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true
